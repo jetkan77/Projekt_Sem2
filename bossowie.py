@@ -1,7 +1,7 @@
 import random
 
 class Boss():
-    def init(self,nazwa,akt,poziom):
+    def __init__(self,nazwa,akt,poziom):
         self.nazwa = nazwa
         self.akt=akt
         self.poziom = poziom
