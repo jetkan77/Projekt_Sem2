@@ -43,6 +43,6 @@ class Lucznik(Bohater):
         super().__init__(inteligencja, sila, zrecznosc, hp)
 
     def oblicz_obrazenia(self):
-        mnoznik_obrazen = random.uniform(1.0,1.😎
+        mnoznik_obrazen = random.uniform(1.0,1.8)
         obrazenia = int(mnoznik_obrazen*self.zrecznosc*1.3)
         return obrazenia
