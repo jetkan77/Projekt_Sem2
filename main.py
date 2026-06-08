@@ -274,8 +274,8 @@ class Gra:
             self.screen.blit(log_gr, (350, 300))
             self.screen.blit(log_bo, (350, 350))
 
-            self.aktywny_boss.rysuj(self.screen, 700, 300)
-            self.gracz.rysuj(self.screen, 100, 270)
+            self.aktywny_boss.rysuj(self.screen, 700, 270)
+            self.gracz.rysuj(self.screen, 50, 270)
 
         if self.aktualny_stan == self.stan_koniec_gry:
             self.screen.fill((50, 0, 0))

@@ -27,31 +27,31 @@ class Boss():
     def rysuj(self, screen, x, y):
         if self.grafika is None:
             self.grafika = pygame.image.load(f"grafiki/{self.plik_grafiki}").convert_alpha()
-            docelowy_rozmiar = (200, 200)
+            docelowy_rozmiar = (250, 250)
             self.grafika = pygame.transform.scale(self.grafika, docelowy_rozmiar)
             self.grafika.set_colorkey((255, 255, 255))
         screen.blit(self.grafika, (x, y))
 poziomy_trudnosci = {
     "Latwy": [Boss("Goblin",1,1,"Goblin.png"),
-              Boss("12",1,2,"Goblin.png"),
-              Boss("13",1,3,"Goblin.png"),
-              Boss("14",1,4,"Goblin.png"),
-              Boss("15",1,5,"Goblin.png")],
-    "Sredni": [Boss("21",2,1,"Goblin.png"),
-              Boss("22",2,2,"Goblin.png"),
-              Boss("23",2,3,"Goblin.png"),
-              Boss("24",2,4,"Goblin.png"),
-              Boss("25",2,5,"Goblin.png")],
-    "Trudny": [Boss("31",3,1,"Goblin.png"),
-              Boss("32",3,2,"Goblin.png"),
-              Boss("33",3,3,"Goblin.png"),
+              Boss("Oko",1,2,"oko.png"),
+              Boss("Grzyb",1,3,"grzyb.png"),
+              Boss("Robok",1,4,"wyrmling.png"),
+              Boss("Driada",1,5,"driada.png")],
+    "Sredni": [Boss("Szkielet",2,1,"szkielet.png"),
+              Boss("Mech Pająk",2,2,"Goblin.png"),
+              Boss("Cyborg",2,3,"Goblin.png"),
+              Boss("Dinożar",2,4,"Goblin.png"),
+              Boss("Straznik",2,5,"straznik.png")],
+    "Trudny": [Boss("Szkielet",3,1,"szkielet.png"),
+              Boss("Czarodziej",3,2,"wizard.png"),
+              Boss("Alchemik",3,3,"alchemik.png"),
               Boss("34",3,4,"Goblin.png"),
-              Boss("35",3,5,"Goblin.png")],
-    "Epicki": [Boss("51",4,1,"Goblin.png"),
-              Boss("52",4,2,"Goblin.png"),
-              Boss("53",4,3,"Goblin.png"),
-              Boss("54",4,4,"Goblin.png"),
-              Boss("55",4,5,"Goblin.png")]
+              Boss("Mroczny Czarodziej",3,5,"czarodziej_szkielet.png")],
+    "Epicki": [Boss("Samuraj",4,1,"samuraj.png"),
+              Boss("Pan Lodu",4,2,"mrozny_rycerz.png"),
+              Boss("Mroczny rycerz",4,3,"szogun.png"),
+              Boss("Nocny Łowca",4,4,"nocny_rycerz.png"),
+              Boss("Strażnik Wulkaniczny",4,5,"wulkan_rycerz.png")]
 
 
 }
