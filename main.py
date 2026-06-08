@@ -7,7 +7,7 @@ class Przycisk():
     def __init__(self,x,y,szerokosc,wysokosc,napis):
         self.rect = pygame.Rect(x,y,szerokosc,wysokosc)
         self.kolor_bazowy = (70,70,70)
-        self.kolor_hover = (100,100,100)
+        self.kolor_hover = (30,30,30)
         self.kolor_tekst = (200,200,200)
         self.obecny_kolor = self.kolor_bazowy
         self.font = pygame.font.Font("PressStart2P-Regular.ttf", 16)
@@ -18,9 +18,14 @@ class Przycisk():
             self.obecny_kolor = self.kolor_hover
         else:
             self.obecny_kolor = self.kolor_bazowy
-    def rysowanie(self,surface):
-        pygame.draw.rect(surface,self.obecny_kolor,self.rect)
-        surface.blit(self.tekst_surface,self.tekst_rect)
+    def rysowanie(self,surface,alpha=255):
+        # pygame.draw.rect(surface,self.obecny_kolor,self.rect)
+        # surface.blit(self.tekst_surface,self.tekst_rect)
+        przycisk_surface = pygame.Surface((self.rect.width, self.rect.height))
+        przycisk_surface.set_alpha(alpha)
+        przycisk_surface.fill(self.obecny_kolor)
+        surface.blit(przycisk_surface, (self.rect.x, self.rect.y))
+        surface.blit(self.tekst_surface, self.tekst_rect)
     def czy_kliknieto(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
@@ -46,11 +51,20 @@ class Gra:
         self.gracz = None
         self.aktywny_akt = None
         self.aktywny_boss = None
+
+        tlo_akt_1 = pygame.image.load("grafiki/akt_1.png").convert_alpha()
+        tlo_akt_1 = pygame.transform.scale(tlo_akt_1,(1000,750))
+        tlo_akt_2 = pygame.image.load("grafiki/akt_2.png").convert_alpha()
+        tlo_akt_2 = pygame.transform.scale(tlo_akt_2,(1000,750))
+        tlo_akt_3 = pygame.image.load("grafiki/akt_3.png").convert_alpha()
+        tlo_akt_3 = pygame.transform.scale(tlo_akt_3,(1000,750))
+        tlo_akt_4 = pygame.image.load("grafiki/akt_4.png").convert_alpha()
+        tlo_akt_4 = pygame.transform.scale(tlo_akt_4,(1000,750))
         self.tla_aktow = {
-            "Latwy": (35, 70, 35),   
-            "Sredni": (70, 50, 30),     
-            "Trudny": (55, 30, 70),  
-            "Epicki": (20, 20, 20)     
+            "Latwy": tlo_akt_1,   
+            "Sredni": tlo_akt_2,     
+            "Trudny": tlo_akt_3,  
+            "Epicki": tlo_akt_4     
         }
 
         self.przycisk_Mag = Przycisk(100, 320, 200, 100, "Mag")
@@ -77,6 +91,11 @@ class Gra:
 
         self.log_gracz = "Wybierz akcje!"
         self.log_boss = ""
+
+        self.mapa_tlo = pygame.image.load(f"grafiki/mapka.png").convert_alpha()
+        self.mapa_tlo = pygame.transform.scale(self.mapa_tlo, (1000, 700))
+
+
 
     def start_gry(self):
         while True:
@@ -217,16 +236,16 @@ class Gra:
             self.przycisk_Lucznik.update(pygame.mouse.get_pos())
             self.przycisk_Lucznik.rysowanie(self.screen)
         if self.aktualny_stan == self.stan_mapa_glowna:
-            self.screen.fill((30, 30, 30))
-            self.przycisk_menu_ulepszen.rysowanie(self.screen)
+            self.screen.blit(self.mapa_tlo, (0, 0))
+            self.przycisk_menu_ulepszen.rysowanie(self.screen,128)
             self.przycisk_menu_ulepszen.update(pygame.mouse.get_pos())
-            self.przycisk_Akt1.rysowanie(self.screen)
+            self.przycisk_Akt1.rysowanie(self.screen,128)
             self.przycisk_Akt1.update(pygame.mouse.get_pos())
-            self.przycisk_Akt2.rysowanie(self.screen)
+            self.przycisk_Akt2.rysowanie(self.screen,128)
             self.przycisk_Akt2.update(pygame.mouse.get_pos())
-            self.przycisk_Akt3.rysowanie(self.screen)
+            self.przycisk_Akt3.rysowanie(self.screen,128)
             self.przycisk_Akt3.update(pygame.mouse.get_pos())
-            self.przycisk_Akt4.rysowanie(self.screen)
+            self.przycisk_Akt4.rysowanie(self.screen,128)
             self.przycisk_Akt4.update(pygame.mouse.get_pos())
         if self.aktualny_stan == self.stan_ulepszanie:
             self.przycisk_mapa.rysowanie(self.screen)
@@ -252,8 +271,10 @@ class Gra:
             self.screen.blit(tekst_zr,(50,635,220,80))
             self.screen.blit(tekst_hp,(720,635,220,80))
         if self.aktualny_stan == self.stan_wybor_bossa:
-            kolor_tla = self.tla_aktow.get(self.aktywny_akt)
-            self.screen.fill(kolor_tla)
+            obraz_tlo = self.tla_aktow.get(self.aktywny_akt)
+            # kolor_tla = self.tla_aktow.get(self.aktywny_akt)
+            self.screen.blit(obraz_tlo,(0,0))
+            # self.screen.fill(kolor_tla)
 
             self.przycisk_mapa.rysowanie(self.screen)
             self.przycisk_mapa.update(pygame.mouse.get_pos())
@@ -263,6 +284,8 @@ class Gra:
                 przycisk.rysowanie(self.screen)
         
         if self.aktualny_stan == self.stan_walka:
+            obraz_tlo = self.tla_aktow.get(self.aktywny_akt)
+            self.screen.blit(obraz_tlo,(0,0))
             self.przycisk_walka.update(pygame.mouse.get_pos())
             self.przycisk_walka.rysowanie(self.screen)
             tekst_gracz = self.font.render(f"Gracz HP: {self.gracz.aktualne_hp}/{self.gracz.max_hp}", True, (0, 255, 0))
@@ -274,8 +297,8 @@ class Gra:
             self.screen.blit(log_gr, (350, 300))
             self.screen.blit(log_bo, (350, 350))
 
-            self.aktywny_boss.rysuj(self.screen, 700, 270)
-            self.gracz.rysuj(self.screen, 50, 270)
+            self.aktywny_boss.rysuj(self.screen, 700, 350)
+            self.gracz.rysuj(self.screen, 50, 350)
 
         if self.aktualny_stan == self.stan_koniec_gry:
             self.screen.fill((50, 0, 0))
