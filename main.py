@@ -110,13 +110,13 @@ class Gra:
     
     def logika_wybor_bohaterow(self,event):
         if self.przycisk_Mag.czy_kliknieto(event):
-            self.gracz = Mag(inteligencja=18, sila=3, zrecznosc=4, hp=90)
+            self.gracz = Mag(inteligencja=18, sila=3, zrecznosc=4, hp=90, nazwa_pliku="mag.png")
             self.aktualny_stan = self.stan_mapa_glowna
         elif self.przycisk_Wojownik.czy_kliknieto(event):
-            self.gracz = Wojownik(inteligencja=5, sila=15, zrecznosc=4, hp=150)
+            self.gracz = Wojownik(inteligencja=5, sila=15, zrecznosc=4, hp=150, nazwa_pliku="wojownik.png")
             self.aktualny_stan = self.stan_mapa_glowna
         elif self.przycisk_Lucznik.czy_kliknieto(event):
-            self.gracz = Lucznik(inteligencja=4, sila=4, zrecznosc=16, hp=120)
+            self.gracz = Lucznik(inteligencja=4, sila=4, zrecznosc=16, hp=120, nazwa_pliku="lucznik.png")
             self.aktualny_stan = self.stan_mapa_glowna
     
     def logika_mapa_glowna(self,event):
@@ -273,6 +273,9 @@ class Gra:
             log_bo = self.font.render(self.log_bossa, 1, (255, 150, 150))  
             self.screen.blit(log_gr, (350, 300))
             self.screen.blit(log_bo, (350, 350))
+
+            self.aktywny_boss.rysuj(self.screen, 700, 300)
+            self.gracz.rysuj(self.screen, 100, 270)
 
         if self.aktualny_stan == self.stan_koniec_gry:
             self.screen.fill((50, 0, 0))

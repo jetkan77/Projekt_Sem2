@@ -1,6 +1,7 @@
 import random
+import pygame
 class Bohater:
-    def __init__(self,inteligencja,sila,zrecznosc,hp):
+    def __init__(self,inteligencja,sila,zrecznosc,hp,nazwa_pliku):
         self.inteligencja = inteligencja
         self.sila=sila
         self.zrecznosc = zrecznosc
@@ -9,6 +10,9 @@ class Bohater:
         self.aktualne_hp = hp
 
         self.punkty_umiejetnosci = 0
+
+        self.plik_grafiki = nazwa_pliku
+        self.grafika = None
 
     def otrzymywane_obrazenia(self,obrazenia):
         self.aktualne_hp = max(0, int(self.aktualne_hp - obrazenia))
@@ -20,9 +24,16 @@ class Bohater:
     def czy_zyje(self):
         return self.aktualne_hp>0
     
+    def rysuj(self,screen,x,y):
+        if self.grafika == None:
+            self.grafika = pygame.image.load(f"grafiki/{self.plik_grafiki}").convert_alpha()
+            docelowy_rozmiar = (250, 250)
+            self.grafika = pygame.transform.scale(self.grafika, docelowy_rozmiar)
+            self.grafika.set_colorkey((255, 255, 255))
+        screen.blit(self.grafika,(x,y))
 class Mag(Bohater):
-    def __init__(self,inteligencja, sila, zrecznosc, hp):
-        super().__init__(inteligencja, sila, zrecznosc, hp)
+    def __init__(self,inteligencja, sila, zrecznosc, hp, nazwa_pliku):
+        super().__init__(inteligencja, sila, zrecznosc, hp, nazwa_pliku)
         
     def oblicz_obrazenia(self):
         mnoznik_obrazen = random.uniform(1.8,2.2)
@@ -30,8 +41,8 @@ class Mag(Bohater):
         return obrazenia
 
 class Wojownik(Bohater):
-    def __init__(self, inteligencja, sila, zrecznosc, hp):
-        super().__init__(inteligencja, sila, zrecznosc, hp)
+    def __init__(self, inteligencja, sila, zrecznosc, hp, nazwa_pliku):
+        super().__init__(inteligencja, sila, zrecznosc, hp, nazwa_pliku)
 
     def oblicz_obrazenia(self):
         mnoznik_obrazen = random.uniform(1.2,1.4)
@@ -39,8 +50,8 @@ class Wojownik(Bohater):
         return obrazenia
 
 class Lucznik(Bohater):
-    def __init__(self, inteligencja, sila, zrecznosc, hp):
-        super().__init__(inteligencja, sila, zrecznosc, hp)
+    def __init__(self, inteligencja, sila, zrecznosc, hp, nazwa_pliku):
+        super().__init__(inteligencja, sila, zrecznosc, hp, nazwa_pliku)
 
     def oblicz_obrazenia(self):
         mnoznik_obrazen = random.uniform(1.0,1.8)
