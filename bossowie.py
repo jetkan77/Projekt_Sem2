@@ -46,7 +46,7 @@ poziomy_trudnosci = {
               Boss("Czarodziej",3,2,"wizard.png"),
               Boss("Alchemik",3,3,"alchemik.png"),
               Boss("Harry Potter",3,4,"fioletowy.png"),
-              Boss("Mroczny Czarodziej",3,5,"czarodziej_szkielet.png")],
+              Boss("Mroczny Czarodziej",3,5,"czardziej_szkielet.png")],
     "Epicki": [Boss("Samuraj",4,1,"samuraj.png"),
               Boss("Pan Lodu",4,2,"mrozny_rycerz.png"),
               Boss("Mroczny rycerz",4,3,"szogun.png"),
