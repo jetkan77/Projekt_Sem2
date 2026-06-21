@@ -1,7 +1,7 @@
 # Projekt_Sem2
 Projekt aplikacji okienkowej pygame
 
-Wymagane biblioteki: Pygame. Pozostałe moduły (sys, random) są wbudowane w bibliotekę standardową Pythona.
+Wymagane biblioteki: Pygame,pytest. Pozostałe moduły (sys, random) są wbudowane w bibliotekę standardową Pythona.
 
 Instrukcja uruchomienia: Należy zainstalować pygame poleceniem pip install pygame. Następnie należy uruchomić plik main.py z poziomu terminala lub środowiska programistycznego.
 
