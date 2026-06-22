@@ -2,7 +2,6 @@ import pytest
 from bohaterowie import Mag, Wojownik, Lucznik
 from bossowie import Boss
 
-# 1. FIXTURY (Przygotowanie narzędzi)
 @pytest.fixture
 def wojownik() -> Wojownik:
     return Wojownik(inteligencja=5, sila=10, zrecznosc=4, hp=150, nazwa_pliku="wojownik.png")
@@ -11,7 +10,6 @@ def wojownik() -> Wojownik:
 def mag() -> Mag:
     return Mag(inteligencja=10, sila=3, zrecznosc=4, hp=90, nazwa_pliku="mag.png")
 
-# 2. TESTY (Sprawdzanie mechanik)
 def test_otrzymywanie_obrazen(wojownik: Wojownik) -> None:
     hp_poczatkowe = wojownik.aktualne_hp
     wojownik.otrzymywane_obrazenia(20)

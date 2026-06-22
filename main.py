@@ -24,8 +24,6 @@ class Przycisk():
             self.obecny_kolor = self.kolor_bazowy
     def rysowanie(self,surface: pygame.Surface,alpha:int=255)-> None:
         """rysuje prostokat przycisku z mozliwa przezroczystoscia i naklada wyrenderowany tekst"""
-        # pygame.draw.rect(surface,self.obecny_kolor,self.rect)
-        # surface.blit(self.tekst_surface,self.tekst_rect)
         przycisk_surface:pygame.Surface = pygame.Surface((self.rect.width, self.rect.height))
         przycisk_surface.set_alpha(alpha)
         przycisk_surface.fill(self.obecny_kolor)
@@ -160,16 +158,12 @@ class Gra:
         wybrany_poziom = None
         if self.przycisk_Akt1.czy_kliknieto(event):
             wybrany_poziom = "Latwy"
-            # self.aktualny_stan = self.stan_akt1
         elif self.przycisk_Akt2.czy_kliknieto(event):
             wybrany_poziom = "Sredni"
-            # self.aktualny_stan = self.stan_akt2
         elif self.przycisk_Akt3.czy_kliknieto(event):
             wybrany_poziom = "Trudny"
-            # self.aktualny_stan = self.stan_akt3
         elif self.przycisk_Akt4.czy_kliknieto(event):
             wybrany_poziom = "Epicki"
-            # self.aktualny_stan = self.stan_akt4
         
         if wybrany_poziom:
             self.aktywny_akt = wybrany_poziom
@@ -295,9 +289,7 @@ class Gra:
             self.screen.blit(tekst_hp,(805,545,220,80))
         if self.aktualny_stan == self.stan_wybor_bossa:
             obraz_tlo: pygame.Surface = self.tla_aktow.get(self.aktywny_akt)
-            # kolor_tla = self.tla_aktow.get(self.aktywny_akt)
             self.screen.blit(obraz_tlo,(0,0))
-            # self.screen.fill(kolor_tla)
 
             self.przycisk_mapa.rysowanie(self.screen)
             self.przycisk_mapa.update(pygame.mouse.get_pos())
