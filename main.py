@@ -5,7 +5,9 @@ from typing import List, Tuple, Any
 from bossowie import poziomy_trudnosci
 
 class Przycisk():
+    """klasa reprezentujaca interaktywny przycisk reagujacy na najechanie myszka i klikniecia"""
     def __init__(self,x: int,y: int,szerokosc: int,wysokosc: int,napis:str)-> None:
+        """tworzy przycisk, ustawia jego pozycje, wymiary, kolory i renderuje teskt"""
         self.rect: pygame.Rect = pygame.Rect(x,y,szerokosc,wysokosc)
         self.kolor_bazowy: Tuple[int, int, int] = (70,70,70)
         self.kolor_hover: Tuple[int, int, int] = (30,30,30)
@@ -15,11 +17,13 @@ class Przycisk():
         self.tekst_surface: pygame.Surface = self.font.render(napis,1,self.kolor_tekst)
         self.tekst_rect: pygame.Rect = self.tekst_surface.get_rect(center = self.rect.center)
     def update(self,mouse_pos: Tuple[int, int])-> None:
+        """aktualizuje przysick(efekt hover) zmienia kolor po najechaniu na niego"""
         if self.rect.collidepoint(mouse_pos):
             self.obecny_kolor = self.kolor_hover
         else:
             self.obecny_kolor = self.kolor_bazowy
     def rysowanie(self,surface: pygame.Surface,alpha:int=255)-> None:
+        """rysuje prostokat przycisku z mozliwa przezroczystoscia i naklada wyrenderowany tekst"""
         # pygame.draw.rect(surface,self.obecny_kolor,self.rect)
         # surface.blit(self.tekst_surface,self.tekst_rect)
         przycisk_surface:pygame.Surface = pygame.Surface((self.rect.width, self.rect.height))
@@ -28,13 +32,16 @@ class Przycisk():
         surface.blit(przycisk_surface, (self.rect.x, self.rect.y))
         surface.blit(self.tekst_surface, self.tekst_rect)
     def czy_kliknieto(self, event)->bool:
+        """sprawdza czy przycisk klinkieto lewym przyciskiem myszy, zwraca true or false"""
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 if self.rect.collidepoint(event.pos):
                     return True
         return False
 class Gra:
+    """klasa zarzadzajaca struktura gry, masztem stanow, logika okien i petla glowna"""
     def __init__(self):
+        """inicjalizuje pygame, okno gry, zegar, system stanow, laduje tla aktow, tworzy przyciski"""
         pygame.init()
         self.screen: pygame.Surface = pygame.display.set_mode((1000,750))
         pygame.display.set_caption("Bossrush")
@@ -99,12 +106,14 @@ class Gra:
 
 
     def start_gry(self)-> None:
+        """uruchamia nieskonczona petle glowna gry, ktora kontroluje odswiezanie logiki, redenrowanie i stale FPS (30)"""
         while True:
             self.obsluga_eventow()
             self.rysuj_gre()
             self.clock.tick(30)
 
     def obsluga_eventow(self)-> None:
+        """przechwytuje zdarzenia w pygame np. zamkniecie gry, koordynuje interakcje z aktualnym stanem gry"""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -124,11 +133,13 @@ class Gra:
                 self.logika_koniec_gry(event)
     
     def logika_koniec_gry(self,event: pygame.event.Event)-> None:
+        """obsluguje zdarzenia na ekranie przegranej, po odrodzeniu cofa gre do mapy glownej i przywraca maksymalne HP bohatera"""
         if self.przycisk_odrodzenie.czy_kliknieto(event):
             self.gracz.aktualne_hp=self.gracz.max_hp
             self.aktualny_stan = self.stan_mapa_glowna
     
     def logika_wybor_bohaterow(self,event: pygame.event.Event)-> None:
+        """obsluguje ekran startowy, tworzy wybranego bohatera wraz z jego statystykami i zmienia stan na mape glowna"""
         if self.przycisk_Mag.czy_kliknieto(event):
             self.gracz = Mag(inteligencja=18, sila=3, zrecznosc=4, hp=90, nazwa_pliku="mag.png")
             self.aktualny_stan = self.stan_mapa_glowna
@@ -140,6 +151,7 @@ class Gra:
             self.aktualny_stan = self.stan_mapa_glowna
     
     def logika_mapa_glowna(self,event: pygame.event.Event)-> None:
+        """zarzadza kliknieciami na mapie swiata, pozwala wejsc do menu lub wybrac akt oraz automatycznie generuje liczbe przyciskow dla konkretnego bossa i aktu"""
         wybrany_poziom = None
         if self.przycisk_Akt1.czy_kliknieto(event):
             wybrany_poziom = "Latwy"
@@ -169,6 +181,7 @@ class Gra:
             self.aktualny_stan = self.stan_ulepszanie
 
     def logika_ulepszanie(self,event: pygame.event.Event)-> None:
+        """rozdawanie punktow statystyk, jesli gracz je posiada moze ulepszyc sile, inteligencje, zrecznosc lub HP"""
         if self.gracz.punkty_umiejetnosci>0:
             if self.przycisk_ulep_sila.czy_kliknieto(event):
                 self.gracz.sila += 1
@@ -193,6 +206,7 @@ class Gra:
             self.aktualny_stan = self.stan_mapa_glowna
 
     def logika_wybor_bossa(self,event: pygame.event.Event)-> None:
+        """obsluguje klikniecia w przycisk konkretnego bossa na liscie aktu. inicjalizuje walke, odnawia HP, przygotowywuje komunikaty startowe"""
         if self.przycisk_mapa.czy_kliknieto(event):
             self.aktualny_stan = self.stan_mapa_glowna
         
@@ -208,6 +222,7 @@ class Gra:
                 return
             
     def logika_walka(self,event: pygame.event.Event)-> None:
+        """obsluguje turowa walke, po kliknieciu 'atakuj' gracz bije bossa, a zzywy boss odpowiada. sprawdza warunki zwyciestwa lub porazki"""
         if self.przycisk_walka.czy_kliknieto(event):
             hp_bossa_przed: int = self.aktywny_boss.aktualne_hp
             self.gracz.atakuj(self.aktywny_boss)
@@ -228,6 +243,7 @@ class Gra:
                 self.aktualny_stan = self.stan_koniec_gry
 
     def rysuj_gre(self)-> None:
+        """czyszczenie ekranu i renderowanie odpowiedniej grafiki, przyciskow, statystyk i tekstow dopasowanych do obecnego stanu gry"""
         self.screen.fill((30, 30, 30))
         if self.aktualny_stan == self.stan_wybor_postaci:
             self.przycisk_Mag.update(pygame.mouse.get_pos())
