@@ -283,10 +283,10 @@ class Gra:
             tekst_hp: pygame.Surface = self.font.render(f"hp: {self.gracz.max_hp}",1,(255,255,255))
 
             self.screen.blit(tekst_pkt,(390,105))
-            self.screen.blit(tekst_sila,(80,245,220,80))
-            self.screen.blit(tekst_int,(790,245,220,80))
-            self.screen.blit(tekst_zr,(90,545,220,80))
-            self.screen.blit(tekst_hp,(805,545,220,80))
+            self.screen.blit(tekst_sila,(80,245))
+            self.screen.blit(tekst_int,(790,245))
+            self.screen.blit(tekst_zr,(90,545))
+            self.screen.blit(tekst_hp,(805,545))
         if self.aktualny_stan == self.stan_wybor_bossa:
             obraz_tlo: pygame.Surface = self.tla_aktow.get(self.aktywny_akt)
             self.screen.blit(obraz_tlo,(0,0))
