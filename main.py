@@ -60,6 +60,8 @@ class Gra:
         self.aktywny_akt = None
         self.aktywny_boss = None
 
+        tlo_ulepszenia: pygame.Surface = pygame.image.load("grafiki/tlo_ulepszenia.png").convert_alpha()
+        tlo_ulepszenia = pygame.transform.scale(tlo_ulepszenia,(1000,750))
         tlo_akt_1: pygame.Surface = pygame.image.load("grafiki/akt_1.png").convert_alpha()
         tlo_akt_1 = pygame.transform.scale(tlo_akt_1,(1000,750))
         tlo_akt_2: pygame.Surface = pygame.image.load("grafiki/akt_2.png").convert_alpha()
@@ -75,6 +77,9 @@ class Gra:
             "Epicki": tlo_akt_4     
         }
 
+        self.tlo_ulepszen: pygame.Surface = pygame.image.load("grafiki/tlo_ulepszenia.png").convert_alpha()
+        self.tlo_ulepszen = pygame.transform.scale(self.tlo_ulepszen,(1000,750))
+
         self.przycisk_Mag: Przycisk = Przycisk(100, 320, 200, 100, "Mag")
         self.przycisk_Wojownik: Przycisk = Przycisk(400, 320, 200, 100, "Wojownik")
         self.przycisk_Lucznik: Przycisk = Przycisk(700, 320, 200, 100, "Lucznik")
@@ -85,10 +90,10 @@ class Gra:
         self.przycisk_Akt4: Przycisk = Przycisk(640,600,220,80,"Akt_4")
         self.przycisk_menu_ulepszen: Przycisk = Przycisk(370,355,260,90,"Menu Ulepszen")
 
-        self.przycisk_ulep_sila: Przycisk = Przycisk(220,120,80,80,"+")
-        self.przycisk_ulep_int: Przycisk = Przycisk(840,120,80,80,"+")
-        self.przycisk_ulep_zr: Przycisk = Przycisk(220,600,80,80,"+")
-        self.przycisk_ulep_hp: Przycisk = Przycisk(840,600,80,80,"+")
+        self.przycisk_ulep_sila: Przycisk = Przycisk(245,222,50,50,"+")
+        self.przycisk_ulep_int: Przycisk = Przycisk(705,222,50,50,"+")
+        self.przycisk_ulep_zr: Przycisk = Przycisk(300,527,50,50,"+")
+        self.przycisk_ulep_hp: Przycisk = Przycisk(650,525,50,50,"+")
         self.przycisk_mapa: Przycisk = Przycisk(10,10,260,90,"Powrot do mapy")
 
         self.przyciski_bossow:List[Przycisk]=[]
@@ -265,6 +270,7 @@ class Gra:
             self.przycisk_Akt4.rysowanie(self.screen,128)
             self.przycisk_Akt4.update(pygame.mouse.get_pos())
         if self.aktualny_stan == self.stan_ulepszanie:
+            self.screen.blit(self.tlo_ulepszen, (0, 0))
             self.przycisk_mapa.rysowanie(self.screen)
             self.przycisk_mapa.update(pygame.mouse.get_pos())
             self.przycisk_ulep_sila.rysowanie(self.screen)
@@ -276,17 +282,17 @@ class Gra:
             self.przycisk_ulep_hp.rysowanie(self.screen)
             self.przycisk_ulep_hp.update(pygame.mouse.get_pos())
 
-            tekst_pkt: pygame.Surface = self.font.render(f"dostepne punkty umiejetnosci: {self.gracz.punkty_umiejetnosci}",1,(255,215,0))
+            tekst_pkt: pygame.Surface = self.font.render(f"wolne punkty: {self.gracz.punkty_umiejetnosci}",1,(255,215,0))
             tekst_sila: pygame.Surface = self.font.render(f"sila: {self.gracz.sila}",1,(255,255,255))
-            tekst_int: pygame.Surface = self.font.render(f"inteligencja: {self.gracz.inteligencja}",1,(255,255,255))
+            tekst_int: pygame.Surface = self.font.render(f"intelig: {self.gracz.inteligencja}",1,(255,255,255))
             tekst_zr: pygame.Surface = self.font.render(f"zrecznosc: {self.gracz.zrecznosc}",1,(255,255,255))
             tekst_hp: pygame.Surface = self.font.render(f"hp: {self.gracz.max_hp}",1,(255,255,255))
 
-            self.screen.blit(tekst_pkt,(370,20))
-            self.screen.blit(tekst_sila,(90,155,220,80))
-            self.screen.blit(tekst_int,(600,155,220,80))
-            self.screen.blit(tekst_zr,(50,635,220,80))
-            self.screen.blit(tekst_hp,(720,635,220,80))
+            self.screen.blit(tekst_pkt,(390,105))
+            self.screen.blit(tekst_sila,(80,245,220,80))
+            self.screen.blit(tekst_int,(790,245,220,80))
+            self.screen.blit(tekst_zr,(90,545,220,80))
+            self.screen.blit(tekst_hp,(805,545,220,80))
         if self.aktualny_stan == self.stan_wybor_bossa:
             obraz_tlo: pygame.Surface = self.tla_aktow.get(self.aktywny_akt)
             # kolor_tla = self.tla_aktow.get(self.aktywny_akt)
